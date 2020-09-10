@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"syscall"
+	"path/filepath"
 )
 
 
@@ -58,7 +59,8 @@ func child() {
 }
 
 func cg() {
-
+	cgroups := "/sys/fs/cgroup"
+	pids := filepath.Join(cgroups, "pids")
 }
 
 func must(err error) {
