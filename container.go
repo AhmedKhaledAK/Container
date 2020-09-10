@@ -6,6 +6,8 @@ import (
 	"os/exec"
 	"syscall"
 	"path/filepath"
+	"io/ioutil"
+	"strconv"
 )
 
 
@@ -61,6 +63,14 @@ func child() {
 func cg() {
 	cgroups := "/sys/fs/cgroup"
 	pids := filepath.Join(cgroups, "pids")
+	err := os.Mkdir(filepath.Join(pids, "ak"), 0755)
+	if err == nil && !os.IsExist(err) {
+		panic(err)
+	}
+	must(ioutil.WriteFile(filepath.Join(pids, "ak/pids.max"), []byte("20"), 0700))
+	must(ioutil.WriteFile(filepath.Join(pids, "ak/notify_on_release"), []byte("1"), 0700))
+	must(ioutil.WriteFile(filepath.Join(pids, "ak/cgroups.procs"), []byte(strconv.Itoa(os.Getpid())), 0700))
+
 }
 
 func must(err error) {
