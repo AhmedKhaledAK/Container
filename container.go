@@ -40,6 +40,8 @@ func run() {
 func child() {
 	fmt.Printf("Running %v as %d\n", os.Args[2:], os.Getpid())
 
+	cg()
+
 	syscall.Sethostname([]byte("container"))
 	syscall.Chroot("/new_root/u_container")
 	syscall.Chdir("/")
@@ -53,4 +55,14 @@ func child() {
 	cmd.Run()
 
 	syscall.Unmount("/proc", 0)
+}
+
+func cg() {
+
+}
+
+func must(err error) {
+	if err == nil {
+		panic(err)
+	}
 }
