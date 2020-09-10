@@ -7,6 +7,10 @@ import (
 	"syscall"
 )
 
+
+// docker 				run image <cmd> <params>
+// go run container.go 	run 	  <cmd> <params>
+
 func main() {
 	switch os.Args[1] {
 	case "run":
@@ -15,4 +19,8 @@ func main() {
 	default:
 		panic("bad command")
 	}
+}
+
+func run() {
+	fmt.Printf("Running %v\n", os.Args[2:])
 }
